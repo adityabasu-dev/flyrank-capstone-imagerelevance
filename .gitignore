@@ -1,6 +1,12 @@
+ImageRelevance/
+Lib/
+Scripts/
+Include/
+pyvenv.cfg
+venv/
 __pycache__/
 *.pyc
-.env
 app.db
+.env
 *.log
 .pytest_cache/

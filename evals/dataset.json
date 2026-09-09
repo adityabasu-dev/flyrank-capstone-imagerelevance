@@ -1,0 +1,23 @@
+[
+  {
+    "post_id": 1,
+    "post_title": "The Secrets of Red Foxes in the Wild",
+    "expected_category": "animal",
+    "expected_keywords": ["fox", "red fox"],
+    "should_match": true
+  },
+  {
+    "post_id": 2,
+    "post_title": "Gray Wolves: Kings of the Forest Pack",
+    "expected_category": "animal",
+    "expected_keywords": ["wolf", "wolves"],
+    "should_match": true
+  },
+  {
+    "post_id": 3,
+    "post_title": "Modern Aviation and Jet Engines",
+    "expected_category": "vehicle",
+    "expected_keywords": ["plane", "airplane", "aircraft"],
+    "should_match": true
+  }
+]

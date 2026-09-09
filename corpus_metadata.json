@@ -1,0 +1,79 @@
+{
+  "pexels-fbo-media-535159577-37174815.jpg": {
+    "subject": "Red Fox",
+    "category": "animal",
+    "attributes": ["fur", "wildlife", "red coat", "outdoors"],
+    "caption": "A close-up view of a wild red fox resting in the grass.",
+    "confidence": 0.95
+  },
+  "pexels-hacihuseyinerol-36007382.jpg": {
+    "subject": "Gray Wolf",
+    "category": "animal",
+    "attributes": ["canine", "forest", "wildlife", "predator"],
+    "caption": "A gray wolf standing amidst trees in a dense forest pack setting.",
+    "confidence": 0.92
+  },
+  "pexels-jonathanborba-15754939.jpg": {
+    "subject": "Commercial Airplane",
+    "category": "vehicle",
+    "attributes": ["jet engine", "aviation", "flight", "sky"],
+    "caption": "A commercial passenger jet soaring through the blue sky.",
+    "confidence": 0.98
+  },
+  "pexels-kalana-kavinda-887011133-25637367.jpg": {
+    "subject": "Domestic Cat",
+    "category": "animal",
+    "attributes": ["feline", "whiskers", "pet", "indoor"],
+    "caption": "A cute domestic cat sitting indoors looking at the camera.",
+    "confidence": 0.89
+  },
+  "pexels-neslihan-ercan-58134101-8093682.jpg": {
+    "subject": "Mountain Landscape",
+    "category": "landscape",
+    "attributes": ["nature", "scenery", "peaks", "outdoors"],
+    "caption": "A panoramic view of snow-capped mountain peaks at sunrise.",
+    "confidence": 0.94
+  },
+  "pexels-planespotter-geneva-1877406873-33797800.jpg": {
+    "subject": "Jet Aircraft",
+    "category": "vehicle",
+    "attributes": ["airplane", "runway", "wings", "transport"],
+    "caption": "An airplane landing on the runway at an airport terminal.",
+    "confidence": 0.96
+  },
+  "pexels-rob-bertrand-2148265487-30004291.jpg": {
+    "subject": "Sports Car",
+    "category": "vehicle",
+    "attributes": ["automobile", "red car", "speed", "modern"],
+    "caption": "A sleek red sports car parked on an open highway.",
+    "confidence": 0.91
+  },
+  "pexels-roman-odintsov-5903382.jpg": {
+    "subject": "Plate of Pasta",
+    "category": "food",
+    "attributes": ["italian", "meal", "dinner", "sauce"],
+    "caption": "A delicious plate of freshly cooked Italian pasta with herbs.",
+    "confidence": 0.93
+  },
+  "pexels-sefa-demirtas-2152709769-32557420.jpg": {
+    "subject": "Coffee Cup",
+    "category": "food",
+    "attributes": ["espresso", "hot beverage", "latte art", "cafe"],
+    "caption": "A warm cup of coffee with latte art served on a wooden table.",
+    "confidence": 0.90
+  },
+  "pexels-tomas-malik-793526-23914490.jpg": {
+    "subject": "Tropical Beach",
+    "category": "landscape",
+    "attributes": ["ocean", "sand", "palm trees", "vacation"],
+    "caption": "A sunny tropical beach featuring clear blue water and palm trees.",
+    "confidence": 0.97
+  },
+  "pexels-zhu-yi-22208710-7492295.jpg": {
+    "subject": "Wild Fox",
+    "category": "animal",
+    "attributes": ["fox", "snow", "winter", "predator"],
+    "caption": "A wild red fox hunting in a snowy winter landscape.",
+    "confidence": 0.94
+  }
+}

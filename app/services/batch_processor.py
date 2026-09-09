@@ -18,7 +18,7 @@ def process_pending_images_batch():
             session.commit()
 
             try:
-                # 1. Vision Tagging
+                # 1. Vision Tagging via Gemini 2.5 Flash
                 result = analyze_image_file(image.file_path)
                 meta = result["metadata"]
 
@@ -35,7 +35,7 @@ def process_pending_images_batch():
                 image.embedding = embed_res["embedding"]
                 image.status = BatchStatus.COMPLETED
 
-                # Cost logs
+                # 3. Log AI Costs
                 v_cost = AICostLog(
                     operation="VISION_TAGGING",
                     model_name="gemini-2.5-flash",

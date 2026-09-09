@@ -1,21 +1,129 @@
-# FlyRank Capstone: AI Image Understanding & Content Matching Engine
+# FlyRank — AI Image Matching Engine
 
-## Design Overview
-This system processes an image library using Gemini Vision Flash to extract schema-validated metadata and embeddings. Blog posts are matched to images using cosine similarity combined with a safety layer (Mismatch Guard) to reject inaccurate matches.
+FlyRank is an automated AI-powered image matching engine designed for media platforms. It ingests corpus images, extracts vision metadata, computes text embeddings, and provides semantic matching against content posts using a multi-layered safety guard to eliminate false positives.
 
-## Core Non-Goal
-- Not building an image editor, web frontend, or large-scale real-time video processor.
+---
 
-## Data Model
-- **Image**: Stores raw file path, schema-validated JSON attributes, Gemini captions, confidence scores, and vector embeddings.
-- **Post**: Blog post content and text embeddings.
-- **AICostLog**: Tracks usage cost per Gemini call.
-- **ImageMatchReview**: Stores approved/rejected image recommendations with guard reasons.
+## Key Features
 
-## Setup & Run Instructions
-```bash
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
+- **Automated Vision Metadata Ingestion:** Categorizes raw images into subjects, attributes, categories, and confidence scores.
+- **Resilient Fallback Pipeline:** Gracefully shifts from live LLM APIs to pre-generated metadata caches (`corpus_metadata.json`) during upstream rate limits or service unavailability.
+- **768-Dimensional Vector Search:** Computes dense vector embeddings and uses cosine similarity to rank content relevance.
+- **Multi-Layered Mismatch Guard:** Applies confidence filtering, category validation, and semantic score thresholds to prevent irrelevant matches.
+- **Background Batch Processing & Cost Tracking:** Processes image queues asynchronously while tracking token counts and operational costs per task.
+- **Automated Evaluation Benchmark:** Built-in evaluation suite measuring Top-1 Match Precision and Mean Reciprocal Rank (MRR).
+
+---
+
+## System Architecture
+
+[ Raw Image Ingestion ]
+│
+▼
+[ Vision Service Pipeline ]
+├── 1. Primary: Gemini Vision API (gemini-3.6-flash)
+└── 2. Fallback: Local Metadata Mock (corpus_metadata.json)
+│
+▼
+[ Metadata Storage & Vector Embedding ]
+├── Image Attributes & Confidence → SQLite (app.db)
+└── 768-dim Dense Vectors → Cosine Similarity Engine
+│
+▼
+[ Mismatch Safety Guard ]
+├── Confidence Score Check (≥ 0.70)
+├── Strict Category Alignment
+└── Vector Similarity Threshold
+│
+▼
+[ Ranked Relevant Image Matches ]
+
+
+---
+
+## Architectural Note: Vision API Resiliency & Fallback Strategy
+
+During production testing, third-party free-tier vision models (such as `gemini-2.0-flash` and `gemini-3.6-flash`) experienced severe rate limits and service spikes (`503 UNAVAILABLE`). 
+
+To preserve system reliability and ensure fully testable pipeline evaluation:
+1. `app/services/vision_service.py` attempts a live HTTP call to the primary Vision API.
+2. If the API returns a rate limit, service unavailable, or network exception, the engine seamlessly falls back to reading pre-analyzed schema-validated metadata from `corpus_metadata.json`.
+3. The metadata is validated against Pydantic schemas (`ImageMetadata`) and processed identically down the pipeline, ensuring database persistence, vector calculation, and safety guard verification remain 100% active and testable.
+
+---
+
+## Evaluation Benchmark
+
+The evaluation benchmark (`evals/run_eval.py`) tests candidate ranking against a ground-truth dataset (`evals/dataset.json`).
+
+### Benchmark Results
+
+=======================================================
+FLYRANK MATCHING ENGINE - EVALUATION BENCHMARK
+Total Evaluation Queries     : 3
+Top-1 Match Precision        : 100.00%
+Mean Reciprocal Rank (MRR)   : 1.0000
+
+---
+
+## Getting Started
+
+### 1. Local Environment Setup
+
+1. **Clone repository & install dependencies:**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   pip install -r requirements.txt
+Configure Environment Variables:
+Create a .env file in the root directory:
+
+Code snippet
+GEMINI_API_KEY=your_gemini_api_key_here
+DATABASE_URL=sqlite:///./app.db
+Seed Database & Run Ingestion:
+
+Bash
+python seed_posts.py
+python seed.py
+Start Development Server:
+
+Bash
 uvicorn app.main:app --reload
+Access interactive API docs at http://localhost:8000/docs.
+
+2. Docker Deployment
+Using docker-compose:
+Bash
+docker compose up -d --build
+Using Standalone Docker Container:
+Bash
+# Build Image
+docker build -t flyrank-api:latest .
+
+# Run Container
+docker run -d \
+  --name flyrank_container \
+  -p 8000:8000 \
+  -e GEMINI_API_KEY="your_api_key_here" \
+  flyrank-api:latest
+Running Benchmarks & Tests
+To execute the automated evaluation suite:
+
+Bash
+python -m evals.run_eval
+To run test suites:
+
+Bash
+pytest
+
+---
+
+### Final Repository Push
+
+Stage your final files, commit, and push to complete your submission:
+
+```bash
+git add README.md Dockerfile compose.yaml .dockerignore
+git commit -m "docs: finalize README with fallback architecture, Docker setup, and benchmark results"
+git push origin main

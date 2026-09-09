@@ -10,3 +10,4 @@ app.db
 .env
 *.log
 .pytest_cache/
+corpus/
